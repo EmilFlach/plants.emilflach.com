@@ -9,9 +9,11 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "mitt": "^3.0.0",
     "papaparse": "^5.3.1",
     "vue": "^3.0.0",
     "vue-gapi": "^2.0.0",
+    "vue-masonry": "^0.13.0",
     "vue-papa-parse": "^2.0.0"
   },
   "devDependencies": {
