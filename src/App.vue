@@ -1,5 +1,4 @@
 <template>
-  <h1>Emil & Lucia's plants</h1>
   <Plants/>
 </template>
 

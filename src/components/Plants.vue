@@ -1,4 +1,5 @@
 <template>
+    <h1>Emil & Lucia's {{plants != null ? plants.length : ''}} plants</h1>
     <div class="plants" v-masonry="plants" transition-duration="0.3s" item-selector=".item" fit-width="true" gutter="16">
         <div v-masonry-tile class="item" v-for="plant in plants" :key="plant.name">
             <div class="container">
