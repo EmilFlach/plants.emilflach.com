@@ -9,7 +9,7 @@
 
 <script>
     export default {
-        name: 'GoogleSheets',
+        name: 'Plants',
         data: function() {
             return {
                 plants: null
@@ -39,5 +39,4 @@
 </script>
 
 <style scoped>
-
 </style>
