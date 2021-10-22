@@ -1,12 +1,9 @@
 <template>
-    <h1>Emil & Lucia's {{plants != null ? plants.length : ''}} plants</h1>
-    <div class="plants" v-masonry="plants" transition-duration="0.3s" item-selector=".item" fit-width="true" gutter="16">
-        <div v-masonry-tile class="item" v-for="plant in plants" :key="plant.name">
-            <div class="container">
-                <img v-bind:src="plant.image_url" v-bind:alt="plant.name">
-                <div class="text">
-                    <b>{{plant.name}}</b> - {{plant.water_ml}}ml
-                </div>
+    <div class="plants">
+        <div class="plant" v-for="plant in plants" :key="plant.name">
+            <img v-bind:src="plant.image_url" v-bind:alt="plant.name" onload="this.classList.add('show')">
+            <div class="text">
+                <b>{{plant.name}}</b> - {{plant.water_ml}}ml
             </div>
         </div>
     </div>
@@ -15,50 +12,23 @@
 <script>
     export default {
         name: 'Plants',
-        data: function() {
-            return {
-                plants: null
-            }
-        },
-        mounted() {
-            let papaParse = document.createElement('script');
-            papaParse.src = 'https://unpkg.com/papaparse@latest/papaparse.min.js';
-            papaParse.async = true;
-            papaParse.onload = () => {
-                this.fetchPlants();
-            };
-            document.head.appendChild(papaParse);
-        },
-        methods: {
-            fetchPlants() {
-                window.Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vQe6xtyzDqTqHQW3Zflfa5i0XmQbMv_jWjeKIe5vA-5VPY5wLjFIvVukCdIXjyxwhHXb5Jul8pmTA3B/pub?gid=0&single=true&output=csv', {
-                    header: true,
-                    download: true,
-                    complete: (results) => {
-                        this.plants = results.data;
-                    }
-                });
-            }
-        }
+        props: ['plants'],
     }
-</script>g
+</script>
 
 <style scoped>
 
     .plants {
-        margin: 0 auto;
+        padding: 0 1rem;
+        columns: 8 18rem;
+        column-gap: 1rem;
     }
 
-    .item {
-        width: 20rem;
-        background: white;
-        margin-bottom: 1rem;
-        border-radius: 1rem;
-        overflow: hidden;
-    }
-
-    .container {
+    .plant {
         position: relative;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+        overflow: hidden;
     }
 
     .text {
@@ -74,6 +44,12 @@
     img {
         position: relative;
         display: block;
-        max-width: 100%;
+        width: 100%;
+        transition: opacity 0.5s;
+        opacity: 0;
+    }
+
+    .show {
+        opacity: 1;
     }
 </style>
