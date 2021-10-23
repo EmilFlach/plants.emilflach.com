@@ -1,10 +1,10 @@
 <template>
     <div class="plants">
-        <div class="plant" v-for="plant in plants" :key="plant.name">
+        <div class="plant" v-for="plant in plants" :key="plant.name" @click="showPlantDetail(plant)">
             <div class="plant-container">
                 <img v-bind:src="plant.image_url" v-bind:alt="plant.name" onload="this.classList.add('show')">
                 <div class="text">
-                    <b>{{plant.name}}</b> - {{plant.water_ml}}ml
+                    <b>{{plant.name}}</b> - {{plant.water}}
                 </div>
             </div>
         </div>
@@ -15,6 +15,12 @@
     export default {
         name: 'Plants',
         props: ['plants'],
+        methods: {
+            showPlantDetail(plant) {
+                // this.$refs.plantDetail.open();
+                this.$emit('showPlantDetail', plant);
+            }
+        }
     }
 </script>
 
@@ -65,7 +71,7 @@
         opacity: 1;
     }
 
-    @media only screen and (min-width: 39rem) {
+    @media only screen and (min-width: 40rem) {
         .plants {
             padding: 1rem;
             columns: 8 18rem;
