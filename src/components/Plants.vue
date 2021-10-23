@@ -2,7 +2,7 @@
     <div class="plants">
         <div class="plant" v-for="plant in plants" :key="plant.name" @click="showPlantDetail(plant)">
             <div class="plant-container">
-                <img v-bind:src="plant.image_url" v-bind:alt="plant.name" onload="this.classList.add('show')">
+                <img v-bind:src="plant.thumb_url" v-bind:alt="plant.name" onload="this.classList.add('show')">
                 <div class="text">
                     <b>{{plant.name}}</b> - {{plant.water}}
                 </div>
