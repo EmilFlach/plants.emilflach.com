@@ -55,11 +55,14 @@ export default {
     background: rgba(47,110,0,0.13);
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
+    margin: 0;
   }
 
   h1 {
     text-align: center;
     Font-Family: 'Merriweather', sans-serif;
     Font-Size: 48px;
+    margin: 0;
+    padding: 3rem 1rem 1rem;
   }
 </style>
