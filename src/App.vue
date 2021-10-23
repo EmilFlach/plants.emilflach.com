@@ -1,5 +1,5 @@
 <template>
-    <h1>Emil & Lucia's {{plants != null ? plants.length : ''}} plants</h1>
+    <h1>Emil & Lucia's {{plants != null ? plants.length : ''}} plants 🌱</h1>
     <Loader v-if="!plantsFetched" />
     <Plants v-if="plantsFetched" :plants="plants" @showPlantDetail="showPlantDetail($event)"/>
     <PlantDetail :plant="selectedPlant" @hidePlantDetail="hidePlantDetail()"/>
@@ -75,6 +75,14 @@
         Font-Family: 'Merriweather', sans-serif;
         Font-Size: 48px;
         margin: 0;
-        padding: 3rem 1rem 1rem;
+        padding: 3rem 1rem 2rem;
     }
+
+    @media only screen and (min-width: 40rem) {
+        h1 {
+            padding: 3rem 1rem 1rem;
+        }
+    }
+
+
 </style>

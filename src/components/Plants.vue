@@ -4,7 +4,7 @@
             <div class="plant-container">
                 <img v-bind:src="plant.thumb_url" v-bind:alt="plant.name" onload="this.classList.add('show')">
                 <div class="text">
-                    <b>{{plant.name}}</b> - {{plant.water}}
+                    <b>{{plant.name}}</b>
                 </div>
             </div>
         </div>

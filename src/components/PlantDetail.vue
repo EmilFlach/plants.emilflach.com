@@ -4,6 +4,15 @@
             <img v-bind:src="plant.image_url" v-bind:alt="plant.name">
             <div class="text">
                 <b>{{plant.name}}</b>
+                <ul>
+                    <li>
+                        <a v-on:click.stop :href="'https://www.google.com/search?q=' + encodeURI(plant.common_name)" target="_blank">
+                            {{plant.common_name}}
+                        </a>
+                    </li>
+                    <li>Water to give: {{plant.water}}</li>
+                    <li>Easy to propagate: {{plant.easy_stekje}}</li>
+                </ul>
             </div>
             <button class="stekje" v-on:click.stop="getStekje(plant)">Stekje please</button>
         </div>
@@ -41,7 +50,7 @@
         top: 0;
         background: rgba(0,0,0,0.9);
         color: white;
-        transform: translateY(100%);
+        transform: translateY(130%);
         transition: transform 0.3s ease-in-out;
         cursor: zoom-out;
     }
@@ -94,6 +103,14 @@
         border-radius: 50%;
         background-color: rgba(255,255,255,0);
         cursor: pointer;
+    }
+
+    ul {
+        text-align: left;
+    }
+
+    a {
+        color: white;
     }
 
     .dismiss svg {
