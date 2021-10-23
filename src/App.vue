@@ -50,9 +50,11 @@
             },
             showPlantDetail(plant) {
                 this.selectedPlant = plant;
+                document.querySelector('body').style.overflow = "hidden";
             },
             hidePlantDetail() {
                 this.selectedPlant = null;
+                document.querySelector('body').style.overflow = "scroll";
             }
         }
     }

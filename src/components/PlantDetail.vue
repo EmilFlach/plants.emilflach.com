@@ -4,11 +4,7 @@
             <img v-bind:src="plant.image_url" v-bind:alt="plant.name">
             <div class="text">
                 <b>{{plant.name}}</b>
-                <p>
-                    {{plant.water}}
-                </p>
             </div>
-
             <button class="stekje" v-on:click.stop="getStekje(plant)">Stekje please</button>
         </div>
         <button class="dismiss">
@@ -47,6 +43,7 @@
         color: white;
         transform: translateY(100%);
         transition: transform 0.3s ease-in-out;
+        cursor: zoom-out;
     }
 
     .container {
