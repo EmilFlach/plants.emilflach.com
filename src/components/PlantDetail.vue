@@ -11,10 +11,11 @@
                         </a>
                     </li>
                     <li>Water to give: {{plant.water}}</li>
-                    <li>Easy to propagate: {{plant.easy_stekje}}</li>
+                    <li>Easy to propagate: {{plant.easy_stekje === 'TRUE' ? '✅': '⛔'}}</li>
                 </ul>
             </div>
-            <button class="stekje" v-on:click.stop="getStekje(plant)">Stekje please</button>
+            <button class="stekje" v-if="plant.easy_stekje === 'TRUE'" v-on:click.stop="getStekje(plant)">Stekje please 🌱</button>
+            <button class="stekje" v-if="plant.easy_stekje === 'FALSE'" v-on:click.stop="getPlant(plant)">Get this plant 🌿</button>
         </div>
         <button class="dismiss">
             <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -36,7 +37,13 @@
                 window.open(
                     'https://docs.google.com/forms/d/e/1FAIpQLSfu3pzmTAGjl5MV985jlmmReUKX84Xd_B8TYxd825GSAZDxXg/viewform?usp=pp_url&entry.2116840055=' + encodeURI(plant.name),
                     '_blank'
-                ).focus()
+                ).focus();
+            },
+            getPlant(plant) {
+                window.open(
+                    'https://www.intratuin.nl/catalogsearch/result/?q=' + encodeURI(plant.common_name),
+                    '_blank'
+                ).focus();
             }
         }
     }
@@ -58,7 +65,7 @@
     .container {
         position: relative;
         height: 100%;
-        max-width: 40rem;
+        max-width: 35rem;
         margin: 0 auto;
         text-align: center;
     }
@@ -79,7 +86,7 @@
         left: 50%;
         transform: translateX(-50%);
         width: calc(100% - 2rem);
-        background-color: rgb(0,160,0);
+        background-color: rgb(0,160,200);
         padding: 1rem;
         color: white;
         font-weight: bold;
@@ -90,15 +97,15 @@
     }
 
     .stekje:hover {
-        background-color: rgb(0,130,0);
+        background-color: rgb(0,120,160);
     }
 
     .dismiss {
         width: 4rem;
         height: 4rem;
         position: absolute;
-        top: 1rem;
-        right: 2rem;
+        top: 0.5rem;
+        right: 0.5rem;
         border: none;
         border-radius: 50%;
         background-color: rgba(255,255,255,0);
