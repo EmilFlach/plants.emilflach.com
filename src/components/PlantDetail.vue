@@ -59,9 +59,10 @@
 <style scoped>
     .plant-detail {
         position: fixed;
-        height: 100%;
-        width: 100%;
         top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
         color: white;
         background: rgba(0,0,0,0.9);
         transform: translateY(130%);
