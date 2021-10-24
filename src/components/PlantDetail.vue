@@ -1,6 +1,6 @@
 <template>
     <div class="plant-detail" @click="hidePlantDetail()" v-bind:class="plant ? 'show' : ''">
-        <div v-if="plant" class="scroll-container">
+        <div v-if="plant" id="plant-detail" class="scroll-container">
             <div class="content">
                 <img v-bind:src="plant.image_url" v-bind:alt="plant.name">
                 <b>{{plant.name}}</b>
@@ -17,13 +17,14 @@
                 </ul>
             </div>
         </div>
-        <GetPlantButton :plant="plant"/>
+
         <button class="dismiss">
             <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
             </svg>
         </button>
     </div>
+    <GetPlantButton :plant="plant"/>
 </template>
 
 <script>
@@ -35,21 +36,22 @@
           GetPlantButton
         },
         props: ['plant'],
+        emits: ["hidePlantDetail"],
         methods: {
             hidePlantDetail() {
                 this.$emit('hidePlantDetail');
             },
             calculateAge(date) {
                 let now = new Date();
-                let epoch = new Date('1970-01-01 00:00:00-0600');
+                let epoch = new Date('1970-01-01T00:00:00-0600');
                 let plantDate = new Date(date);
                 let difference = new Date(now - plantDate);
                 let years = difference.getYear() - epoch.getYear();
                 let months = difference.getMonth() - epoch.getMonth();
                 if (years > 0) {
-                    return years + " year(s) and " + months + " month(s)";
+                    return years + " year" + (years > 1 ? 's' : '') + " and " + months + " month"  + (months > 1 ? 's' : '');
                 } else {
-                    return months + " month(s)";
+                    return months + " month"  + (months > 1 ? 's' : '');
                 }
             },
         }
@@ -94,13 +96,17 @@
     b {
         display: inline-block;
         vertical-align: top;
-        padding: 1rem 0 0.5rem;
-        font-size: 1.5rem;
+        padding: 1.5rem 0 1rem;
+        font-size: 1.75rem;
     }
 
     ul {
         margin: 0;
         padding-left: 1rem;
+    }
+
+    li {
+        padding-bottom: 0.25rem;
     }
 
     a {

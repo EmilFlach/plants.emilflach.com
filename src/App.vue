@@ -36,6 +36,8 @@
 
             };
             document.head.appendChild(papaParse);
+            window.bodyScrollLock = require('body-scroll-lock');
+
         },
         methods: {
             fetchPlants() {
@@ -50,11 +52,13 @@
             },
             showPlantDetail(plant) {
                 this.selectedPlant = plant;
-                document.querySelector('body').style.overflow = "hidden";
+                const plantDetail = document.querySelector('#plant-detail');
+                window.bodyScrollLock.disableBodyScroll(plantDetail);
             },
             hidePlantDetail() {
                 this.selectedPlant = null;
-                document.querySelector('body').style.overflow = "scroll";
+                const plantDetail = document.querySelector('#plant-detail');
+                window.bodyScrollLock.enableBodyScroll(plantDetail);
             }
         }
     }
@@ -62,6 +66,10 @@
 
 <style>
     @import url('https://fonts.googleapis.com/css?family=Merriweather|Poppins:300');
+
+    html {
+        height: 100vh;
+    }
 
     body {
         background: rgba(47,110,0,0.13);
@@ -83,6 +91,4 @@
             padding: 3rem 1rem 1rem;
         }
     }
-
-
 </style>

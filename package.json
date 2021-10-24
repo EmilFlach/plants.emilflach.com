@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@webzlodimir/vue-bottom-sheet": "^1.2.4",
+    "body-scroll-lock": "^4.0.0-beta.0",
     "core-js": "^3.6.5",
     "mitt": "^3.0.0",
     "papaparse": "^5.3.1",
