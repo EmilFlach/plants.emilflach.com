@@ -29,23 +29,33 @@
 <style scoped>
     .stekje {
         position: fixed;
+        width: calc(100% - 2rem);
+        max-width: 20rem;
         bottom: 1rem;
         left: 50%;
         transform: translateX(-50%);
-        width: calc(100% - 2rem);
-        max-width: 20rem;
-
-        background-color: rgb(0,160,200);
         padding: 1rem;
+
         color: white;
+        background-color: rgb(0,160,200);
+
         font-weight: bold;
         font-size: 1rem;
-        border: none;
+
+        border-top: none;
+        border-bottom: 2px solid rgb(0,80,120);
+        border-right:  1px solid rgb(0,80,120);
+        border-left:   1px solid rgb(0,80,120);
         border-radius: 0.5rem;
+
         cursor: pointer;
     }
 
     .stekje:hover {
         background-color: rgb(0,120,160);
+    }
+
+    .stekje:active {
+        border: none;
     }
 </style>
