@@ -53,11 +53,15 @@
             showPlantDetail(plant) {
                 this.selectedPlant = plant;
                 const plantDetail = document.querySelector('#plant-detail');
+                const body = document.querySelector('body');
+                body.classList.add('no-scroll');
                 window.bodyScrollLock.disableBodyScroll(plantDetail);
             },
             hidePlantDetail() {
                 this.selectedPlant = null;
                 const plantDetail = document.querySelector('#plant-detail');
+                const body = document.querySelector('body');
+                body.classList.remove('no-scroll');
                 window.bodyScrollLock.enableBodyScroll(plantDetail);
             }
         }
@@ -76,6 +80,10 @@
         font-family: 'Poppins', sans-serif;
         font-size: 16px;
         margin: 0;
+    }
+    
+    .no-scroll {
+        overflow: hidden;
     }
 
     h1 {
