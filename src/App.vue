@@ -52,8 +52,6 @@
             },
             showPlantDetail(plant) {
                 this.selectedPlant = plant;
-                const plantDetail = document.querySelector('#plant-detail');
-                window.bodyScrollLock.disableBodyScroll(plantDetail);
             },
             hidePlantDetail() {
                 const plantDetail = document.querySelector('#plant-detail');
