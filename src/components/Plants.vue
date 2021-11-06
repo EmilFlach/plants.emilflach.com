@@ -76,6 +76,8 @@
             padding: 1rem;
             columns: 8 18rem;
             column-gap: 1rem;
+            max-width: 80rem;
+            margin: 0 auto;
         }
 
         .plant {
