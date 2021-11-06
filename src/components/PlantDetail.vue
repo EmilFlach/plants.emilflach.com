@@ -37,12 +37,6 @@
         },
         props: ['plant'],
         emits: ["hidePlantDetail"],
-        updated() {
-            if(this.plant != null) {
-                const plantDetail = document.querySelector('#plant-detail');
-                window.bodyScrollLock.disableBodyScroll(plantDetail);
-            }
-        },
         methods: {
             hidePlantDetail() {
                 this.$emit('hidePlantDetail');
