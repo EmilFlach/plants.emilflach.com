@@ -37,6 +37,12 @@
         },
         props: ['plant'],
         emits: ["hidePlantDetail"],
+        updated() {
+            if(this.plant != null) {
+                const plantDetail = document.querySelector('#plant-detail');
+                window.bodyScrollLock.disableBodyScroll(plantDetail);
+            }
+        },
         methods: {
             hidePlantDetail() {
                 this.$emit('hidePlantDetail');
@@ -62,9 +68,9 @@
     .plant-detail {
         position: fixed;
         top: 0;
-        bottom: 0;
         left: 0;
         right: 0;
+        height: 130%;
         color: white;
         background: rgba(0,0,0,0.9);
         transform: translateY(130%);
