@@ -1,5 +1,5 @@
 <template>
-    <h1>Emil & Lucia's {{plants != null ? plants.length : ''}} plants 🌱</h1>
+    <h1>{{pageTitle}} {{plants != null ? plants.length : ''}} plants 🌱</h1>
     <Loader v-if="!plantsFetched" />
     <Plants v-if="plantsFetched" :plants="plants" @showPlantDetail="showPlantDetail($event)"/>
     <PlantDetail :plant="selectedPlant" @hidePlantDetail="hidePlantDetail()"/>
@@ -25,7 +25,7 @@
             }
         },
         created () {
-            document.title = "Emil & Lucia's plants";
+            document.title = window.documentTitle;
         },
         mounted() {
             let papaParse = document.createElement('script');
@@ -41,7 +41,7 @@
         },
         methods: {
             fetchPlants() {
-                window.Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vQe6xtyzDqTqHQW3Zflfa5i0XmQbMv_jWjeKIe5vA-5VPY5wLjFIvVukCdIXjyxwhHXb5Jul8pmTA3B/pub?gid=0&single=true&output=csv', {
+                window.Papa.parse(window.googleSheetURL, {
                     header: true,
                     download: true,
                     complete: (results) => {
@@ -57,6 +57,11 @@
                 const plantDetail = document.querySelector('#plant-detail');
                 window.bodyScrollLock.enableBodyScroll(plantDetail);
                 this.selectedPlant = null;
+            }
+        },
+        computed: {
+            pageTitle() {
+                return window.pageTitle;
             }
         }
     }
