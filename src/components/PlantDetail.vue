@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="plant-detail" @click="hidePlant()" v-bind:class="plant ? 'show' : ''">
+        <router-link to="/" class="plant-detail" v-bind:class="plant ? 'show' : ''">
             <div v-if="plant" id="plant-detail" class="scroll-container">
                 <div class="content">
                     <img v-bind:src="plant.image_url" v-bind:alt="plant.name">
@@ -24,7 +24,7 @@
                     <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
                 </svg>
             </button>
-        </div>
+        </router-link>
         <GetPlantButton :plant="plant"/>
     </div>
 
@@ -38,29 +38,22 @@
         components: {
           GetPlantButton
         },
+        props: ['plant'],
         emits: ["hidePlant", "showPlantById"],
-        data () {
-          return {
-              plant: null
-          }
+        created() {
+            this.$watch(
+                () => this.$route.params,
+                () => {
+                    this.fetchPlant()
+                },
+                { immediate: true }
+            )
         },
-        // created() {
-        //     // watch the params of the route to fetch the data again
-        //     // this.$watch(
-        //     //     () => this.$route.params,
-        //     //     () => {
-        //     //         this.fetchPlant()
-        //     //     },
-        //     //     // fetch the data when the view is created and the data is
-        //     //     // already being observed
-        //     //     { immediate: true }
-        //     // )
-        // },
         updated() {
-          if (this.plant != null) {
-              const plantDetail = document.querySelector('#plant-detail');
-              window.bodyScrollLock.disableBodyScroll(plantDetail);
-          }
+          // if (this.plant != null) {
+          //     const plantDetail = document.querySelector('#plant-detail');
+          //     window.bodyScrollLock.disableBodyScroll(plantDetail);
+          // }
         },
         methods: {
             fetchPlant() {

@@ -1,8 +1,8 @@
 <template>
     <h1>{{pageTitle}} {{plants != null ? plants.length : ''}} plants 🌱</h1>
     <Loader v-if="!plantsFetched" />
-    <Plants v-if="plantsFetched" :plants="plants" @showPlantDetail="showPlantDetail($event)"/>
-    <PlantDetail :plant="selectedPlant" @hidePlantDetail="hidePlantDetail()"/>
+    <Plants v-if="plantsFetched" :plants="plants" @showPlant="showPlant($event)"/>
+    <PlantDetail :plant="selectedPlant" @hidePlant="hidePlant()" @showPlantById="showPlantById($event)"/>
 </template>
 
 <script>
@@ -26,6 +26,13 @@
         },
         created () {
             document.title = window.documentTitle;
+            this.$watch(
+                () => this.$route.params,
+                () => {
+                    this.hidePlant()
+                },
+                { immediate: true }
+            )
         },
         mounted() {
             let papaParse = document.createElement('script');
@@ -33,7 +40,6 @@
             papaParse.async = true;
             papaParse.onload = () => {
                 this.fetchPlants();
-
             };
             document.head.appendChild(papaParse);
             window.bodyScrollLock = require('body-scroll-lock');
@@ -50,12 +56,20 @@
                     }
                 });
             },
-            showPlantDetail(plant) {
+            showPlantById(id) {
+                if(id != null && this.plants != null) {
+                    let plant = this.plants.find(plant => plant.id === id);
+                    this.showPlant(plant);
+                }
+            },
+            showPlant(plant) {
                 this.selectedPlant = plant;
             },
-            hidePlantDetail() {
-                const plantDetail = document.querySelector('#plant-detail');
-                window.bodyScrollLock.enableBodyScroll(plantDetail);
+            hidePlant() {
+                // if (window.bodyScrollLock != null) {
+                //     const plantDetail = document.querySelector('#plant-detail');
+                //     window.bodyScrollLock.enableBodyScroll(plantDetail);
+                // }
                 this.selectedPlant = null;
             }
         },

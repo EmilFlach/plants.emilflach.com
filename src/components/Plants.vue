@@ -1,13 +1,13 @@
 <template>
     <div class="plants">
-        <div class="plant" v-for="plant in plants" :key="plant.name" @click="showPlantDetail(plant)">
+        <router-link v-bind:to="'/plants/' + plant.id" class="plant" v-for="plant in plants" :key="plant.name">
             <div class="plant-container">
                 <img v-bind:src="plant.thumb_url" v-bind:alt="plant.name" onload="this.classList.add('show')">
                 <div class="text">
                     <b>{{plant.name}}</b>
                 </div>
             </div>
-        </div>
+        </router-link>
     </div>
 </template>
 
@@ -16,9 +16,8 @@
         name: 'Plants',
         props: ['plants'],
         methods: {
-            showPlantDetail(plant) {
-                // this.$refs.plantDetail.open();
-                this.$emit('showPlantDetail', plant);
+            showPlant(plant) {
+                this.$emit('showPlant', plant);
             }
         }
     }

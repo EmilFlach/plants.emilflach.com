@@ -16,7 +16,8 @@
     "vue": "^3.0.0",
     "vue-gapi": "^2.0.0",
     "vue-masonry": "^0.13.0",
-    "vue-papa-parse": "^2.0.0"
+    "vue-papa-parse": "^2.0.0",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
