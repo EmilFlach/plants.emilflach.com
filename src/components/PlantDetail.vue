@@ -1,30 +1,33 @@
 <template>
-    <div class="plant-detail" @click="hidePlantDetail()" v-bind:class="plant ? 'show' : ''">
-        <div v-if="plant" id="plant-detail" class="scroll-container">
-            <div class="content">
-                <img v-bind:src="plant.image_url" v-bind:alt="plant.name">
-                <b>{{plant.name}}</b>
-                <ul>
-                    <li>
-                        <a v-on:click.stop :href="'https://www.google.com/search?q=' + encodeURI(plant.common_name)" target="_blank">
-                            {{plant.common_name}}
-                        </a>
-                    </li>
-                    <li>Weekly watering: {{plant.water}}</li>
-                    <li>Easy to propagate: {{plant.easy_stekje === 'TRUE' ? '✅': '⛔'}}</li>
-                    <li>Ours for: {{ calculateAge(plant.owned_since) }}</li>
-                    <li>Brought by: {{plant.brought_by}}</li>
-                </ul>
+    <div>
+        <div class="plant-detail" @click="hidePlant()" v-bind:class="plant ? 'show' : ''">
+            <div v-if="plant" id="plant-detail" class="scroll-container">
+                <div class="content">
+                    <img v-bind:src="plant.image_url" v-bind:alt="plant.name">
+                    <b>{{plant.name}}</b>
+                    <ul>
+                        <li>
+                            <a v-on:click.stop :href="'https://www.google.com/search?q=' + encodeURI(plant.common_name)" target="_blank">
+                                {{plant.common_name}}
+                            </a>
+                        </li>
+                        <li>Weekly watering: {{plant.water}}</li>
+                        <li>Easy to propagate: {{plant.easy_stekje === 'TRUE' ? '✅': '⛔'}}</li>
+                        <li>Ours for: {{ calculateAge(plant.owned_since) }}</li>
+                        <li>Brought by: {{plant.brought_by}}</li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <button class="dismiss">
-            <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
-            </svg>
-        </button>
+            <button class="dismiss">
+                <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+                </svg>
+            </button>
+        </div>
+        <GetPlantButton :plant="plant"/>
     </div>
-    <GetPlantButton :plant="plant"/>
+
 </template>
 
 <script>
@@ -35,8 +38,24 @@
         components: {
           GetPlantButton
         },
-        props: ['plant'],
-        emits: ["hidePlantDetail"],
+        emits: ["hidePlant", "showPlantById"],
+        data () {
+          return {
+              plant: null
+          }
+        },
+        // created() {
+        //     // watch the params of the route to fetch the data again
+        //     // this.$watch(
+        //     //     () => this.$route.params,
+        //     //     () => {
+        //     //         this.fetchPlant()
+        //     //     },
+        //     //     // fetch the data when the view is created and the data is
+        //     //     // already being observed
+        //     //     { immediate: true }
+        //     // )
+        // },
         updated() {
           if (this.plant != null) {
               const plantDetail = document.querySelector('#plant-detail');
@@ -44,8 +63,11 @@
           }
         },
         methods: {
-            hidePlantDetail() {
-                this.$emit('hidePlantDetail');
+            fetchPlant() {
+                this.$emit('showPlantById', this.$route.params.id);
+            },
+            hidePlant() {
+                this.$emit('hidePlant');
             },
             calculateAge(date) {
                 let now = new Date();
