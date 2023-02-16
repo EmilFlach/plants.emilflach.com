@@ -1,6 +1,6 @@
 // 3rd party dependencies
 import { createApp } from 'vue'
-import * as VueRouter from "vue-router";
+import * as VueRouter from "vue-router"
 import { createPinia } from 'pinia'
 
 // Project dependencies
@@ -27,9 +27,8 @@ router.beforeEach(() => {
 
 let pinia = createPinia();
 let app = createApp(App);
-app.use(router);
 app.use(pinia);
-window.vm = app;
+app.use(router);
 app.mount('#app');
 
 

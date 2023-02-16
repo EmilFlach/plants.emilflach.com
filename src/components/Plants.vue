@@ -1,6 +1,6 @@
 <template>
     <div class="plants">
-        <router-link v-for="plant in store.plants" v-bind:to="'/plants/' + plant.id" class="plant" :key="plant.name">
+        <router-link v-for="plant in plants" v-bind:to="'/plants/' + plant.id" class="plant" :key="plant.name">
             <div class="plant-container">
                 <img v-bind:src="plant.thumb_url" v-bind:alt="plant.name" onload="this.classList.add('show')">
                 <div class="text">
@@ -11,12 +11,12 @@
     </div>
 </template>
 
-<script lang="js" setup>
+<script>
     // import { usePlantsStore } from '../stores/plants'
-
     // const store = usePlantsStore();
     export default {
         name: 'Plants',
+        plants: []
     }
 </script>
 

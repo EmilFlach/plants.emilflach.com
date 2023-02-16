@@ -28,7 +28,6 @@
             document.title = window.documentTitle;
         },
         mounted() {
-            // store.fetchPlants();
             // window.bodyScrollLock = require('body-scroll-lock');
         },
         methods: {
