@@ -1,14 +1,19 @@
 <template>
-    <h1>{{pageTitle}} {{plants != null ? plants.length : ''}} plants 🌱</h1>
-    <Loader v-if="!plantsFetched" />
-    <Plants v-if="plantsFetched" :plants="plants" @showPlant="showPlant($event)"/>
-    <PlantDetail :plant="selectedPlant" @hidePlant="hidePlant()" @showPlantById="showPlantById($event)"/>
+    <!--<h1>{{pageTitle}} {{store.plants != null ? store.plants.length : ''}} plants 🌱</h1>-->
+    <!--<Loader v-if="!store.plantsFetched" />-->
+    <router-view></router-view>
+    <!--<Plants v-if="store.plantsFetched" :plants="store.plants" @showPlant="showPlant($event)"/>-->
+    <!--<PlantDetail :plant="store.selectedPlant" @hidePlant="hidePlant()" @showPlantById="showPlantById($event)"/>-->
+
 </template>
 
-<script>
+<script lang="js" setup>
+    // import { usePlantsStore } from './stores/plants'
     import Plants from './components/Plants.vue'
     import Loader from './components/Loader.vue'
     import PlantDetail from './components/PlantDetail.vue'
+
+    // const store = usePlantsStore();
 
     export default {
         name: 'App',
@@ -18,46 +23,19 @@
             PlantDetail
         },
         data: function() {
-            return {
-                plants: null,
-                selectedPlant: null,
-                plantsFetched: false
-            }
         },
         created () {
             document.title = window.documentTitle;
-            this.$watch(
-                () => this.$route.params,
-                () => {
-                    this.hidePlant()
-                },
-                { immediate: true }
-            )
         },
         mounted() {
-            let papaParse = document.createElement('script');
-            papaParse.src = 'https://unpkg.com/papaparse@latest/papaparse.min.js';
-            papaParse.async = true;
-            papaParse.onload = () => {
-                this.fetchPlants();
-            };
-            document.head.appendChild(papaParse);
-            window.bodyScrollLock = require('body-scroll-lock');
-
+            // store.fetchPlants();
+            // window.bodyScrollLock = require('body-scroll-lock');
         },
         methods: {
-            fetchPlants() {
-                window.Papa.parse(window.googleSheetURL, {
-                    header: true,
-                    download: true,
-                    complete: (results) => {
-                        this.plants = results.data;
-                        this.plantsFetched = true
-                    }
-                });
-            },
             showPlantById(id) {
-                if(id != null && this.plants != null) {
+                if(this.plant == null) {
+                    this.fetchPlants();
+                } else {
                     let plant = this.plants.find(plant => plant.id === id);
                     this.showPlant(plant);
                 }

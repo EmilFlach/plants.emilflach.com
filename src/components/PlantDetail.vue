@@ -49,6 +49,9 @@
                 { immediate: true }
             )
         },
+        mounted() {
+            this.fetchPlants();
+        },
         updated() {
           // if (this.plant != null) {
           //     const plantDetail = document.querySelector('#plant-detail');

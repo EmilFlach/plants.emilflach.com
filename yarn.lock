@@ -3528,6 +3528,11 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
+es6-object-assign@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/es6-object-assign/-/es6-object-assign-1.1.0.tgz#c2c3582656247c39ea107cb1e6652b6f9f24523c"
+  integrity sha512-MEl9uirslVwqQU369iHNWZXsI8yaZYGg/D65aOgZkeyFJwHYSxilf7rQzXKI7DdDuBPrBXbfk3sl9hJhmd5AUw==
+
 escalade@^3.1.1:
   version "3.1.1"
   resolved "https://registry.npmjs.org/escalade/-/escalade-3.1.1.tgz"
@@ -6409,6 +6414,14 @@ pify@^4.0.1:
   resolved "https://registry.npmjs.org/pify/-/pify-4.0.1.tgz"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
+pinia@^2.0.30:
+  version "2.0.30"
+  resolved "https://registry.yarnpkg.com/pinia/-/pinia-2.0.30.tgz#b18a581dad6821ed5fbebfaf631229480ea9d2d9"
+  integrity sha512-q6DUmxWwe/mQgg+55QQjykpKC+aGeGdaJV3niminl19V08dE+LRTvSEuqi6/NLSGCKHI49KGL6tMNEOssFiMyA==
+  dependencies:
+    "@vue/devtools-api" "^6.4.5"
+    vue-demi "*"
+
 pinkie-promise@^2.0.0:
   version "2.0.1"
   resolved "https://registry.npmjs.org/pinkie-promise/-/pinkie-promise-2.0.1.tgz"
@@ -8394,6 +8407,11 @@ vm-browserify@^1.0.1:
   resolved "https://registry.npmjs.org/vm-browserify/-/vm-browserify-1.1.2.tgz"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
+vue-demi@*:
+  version "0.13.11"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.13.11.tgz#7d90369bdae8974d87b1973564ad390182410d99"
+  integrity sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==
+
 vue-eslint-parser@^7.10.0:
   version "7.11.0"
   resolved "https://registry.npmjs.org/vue-eslint-parser/-/vue-eslint-parser-7.11.0.tgz"
@@ -8449,13 +8467,12 @@ vue-masonry@^0.13.0:
     masonry-layout "^4.2.2"
     vue "^2.0.0"
 
-vue-papa-parse@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/vue-papa-parse/-/vue-papa-parse-2.0.0.tgz"
-  integrity sha512-2Tn4C+enBTmg6Rh87ZQedzM/dGBm/cvwAa7Ct0yXwFBN4scd31Eybd4YOBrmTGg1Mid2maQ6Sh1PFitmCpvKQg==
+vue-papa-parse@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/vue-papa-parse/-/vue-papa-parse-3.1.0.tgz#a97f8cb65273cecf58df105e0660e8283512725c"
+  integrity sha512-5YdF3Dtf49EGfaz3+IgIpUw9yYuvV3HekZkob6jrK/Ffz1aCrWjevtcQByKxrNtK7RAL39B0ca93bogKuiQQKg==
   dependencies:
     papaparse "^5.3.0"
-    vue "^2.6.12"
 
 vue-router@4:
   version "4.1.6"
@@ -8477,7 +8494,12 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.0.0, vue@^2.6.12:
+vue@2.6.11:
+  version "2.6.11"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
+  integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
+
+vue@^2.0.0:
   version "2.6.14"
   resolved "https://registry.npmjs.org/vue/-/vue-2.6.14.tgz"
   integrity sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==
@@ -8492,6 +8514,14 @@ vue@^3.0.0:
     "@vue/runtime-dom" "3.2.20"
     "@vue/server-renderer" "3.2.20"
     "@vue/shared" "3.2.20"
+
+vuejs-logger@^1.5.5:
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/vuejs-logger/-/vuejs-logger-1.5.5.tgz#25cc0905341eaf19c22480505ee94f4a9dd93275"
+  integrity sha512-wESz1F4KWk98YANEDg2yeS+fpwk2WrR41ZslLfZgTD+EYFm/7VMMUjRThhHT8CCOLOCQdsS4Ge2C9bIs68v8Ww==
+  dependencies:
+    es6-object-assign "1.1.0"
+    vue "2.6.11"
 
 watchpack-chokidar2@^2.0.1:
   version "2.0.1"
