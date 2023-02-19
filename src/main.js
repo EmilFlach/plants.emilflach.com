@@ -1,35 +1,18 @@
 // 3rd party dependencies
 import { createApp } from 'vue'
-import * as VueRouter from "vue-router"
-import { createPinia } from 'pinia'
 
 // Project dependencies
 import App from './App.vue'
-import Plants from './components/Plants.vue'
-import PlantDetail from './components/PlantDetail.vue'
-import {usePlantsStore} from "./stores/plants";
+import store from "./store.js";
+import router from "./router";
 
-
-const routes = [
-    { path: '/', component: Plants },
-    { path: '/plants/:id', component: PlantDetail },
-];
-
-const router = VueRouter.createRouter({
-    history: VueRouter.createWebHistory(),
-    routes,
-});
-
-router.beforeEach(() => {
-    const store = usePlantsStore();
-    store.fetchPlants();
-});
-
-let pinia = createPinia();
 let app = createApp(App);
-app.use(pinia);
+app.use(store);
 app.use(router);
-app.mount('#app');
+
+router.isReady().then(() => {
+    app.mount("#app");
+});
 
 
 

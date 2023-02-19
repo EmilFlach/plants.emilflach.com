@@ -32,39 +32,25 @@
 
 <script>
     import GetPlantButton from './GetPlantButton.vue'
+    import { usePlantsStore } from '../stores/plants'
+    import {useRoute} from "vue-router";
 
     export default {
         name: 'PlantDetail',
         components: {
           GetPlantButton
         },
-        props: ['plant'],
-        emits: ["hidePlant", "showPlantById"],
-        created() {
-            this.$watch(
-                () => this.$route.params,
-                () => {
-                    this.fetchPlant()
-                },
-                { immediate: true }
-            )
+        data: () => {
+            return {
+                store: usePlantsStore(),
+                plant: null
+            }
         },
         mounted() {
-            this.fetchPlants();
-        },
-        updated() {
-          // if (this.plant != null) {
-          //     const plantDetail = document.querySelector('#plant-detail');
-          //     window.bodyScrollLock.disableBodyScroll(plantDetail);
-          // }
+            const route = useRoute();
+            this.plant = this.store.getPlantById(route.params.id);
         },
         methods: {
-            fetchPlant() {
-                this.$emit('showPlantById', this.$route.params.id);
-            },
-            hidePlant() {
-                this.$emit('hidePlant');
-            },
             calculateAge(date) {
                 let now = new Date();
                 let epoch = new Date('1970-01-01T00:00:00-0600');

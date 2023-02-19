@@ -1,54 +1,26 @@
 <template>
-    <!--<h1>{{pageTitle}} {{store.plants != null ? store.plants.length : ''}} plants 🌱</h1>-->
-    <!--<Loader v-if="!store.plantsFetched" />-->
+    <h1>{{pageTitle}} {{store.plants != null ? store.plants.length : ''}} plants 🌱</h1>
+    <Loader v-if="store.plants == null" />
     <router-view></router-view>
-    <!--<Plants v-if="store.plantsFetched" :plants="store.plants" @showPlant="showPlant($event)"/>-->
-    <!--<PlantDetail :plant="store.selectedPlant" @hidePlant="hidePlant()" @showPlantById="showPlantById($event)"/>-->
 
 </template>
 
-<script lang="js" setup>
-    // import { usePlantsStore } from './stores/plants'
-    import Plants from './components/Plants.vue'
+<script>
+    import { usePlantsStore } from './stores/plants'
     import Loader from './components/Loader.vue'
-    import PlantDetail from './components/PlantDetail.vue'
-
-    // const store = usePlantsStore();
 
     export default {
         name: 'App',
         components: {
-            Plants,
-            Loader,
-            PlantDetail
+            Loader
         },
-        data: function() {
+        data: () => {
+            return {
+                store: usePlantsStore()
+            }
         },
         created () {
             document.title = window.documentTitle;
-        },
-        mounted() {
-            // window.bodyScrollLock = require('body-scroll-lock');
-        },
-        methods: {
-            showPlantById(id) {
-                if(this.plant == null) {
-                    this.fetchPlants();
-                } else {
-                    let plant = this.plants.find(plant => plant.id === id);
-                    this.showPlant(plant);
-                }
-            },
-            showPlant(plant) {
-                this.selectedPlant = plant;
-            },
-            hidePlant() {
-                // if (window.bodyScrollLock != null) {
-                //     const plantDetail = document.querySelector('#plant-detail');
-                //     window.bodyScrollLock.enableBodyScroll(plantDetail);
-                // }
-                this.selectedPlant = null;
-            }
         },
         computed: {
             pageTitle() {
