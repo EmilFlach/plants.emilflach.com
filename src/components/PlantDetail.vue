@@ -1,20 +1,20 @@
 <template>
     <div>
-        <router-link to="/" class="plant-detail" v-bind:class="plant ? 'show' : ''">
-            <div v-if="plant" id="plant-detail" class="scroll-container">
+        <router-link to="/" class="plant-detail" v-bind:class="store.plant ? 'show' : ''">
+            <div v-if="store.plant" id="plant-detail" class="scroll-container">
                 <div class="content">
-                    <img v-bind:src="plant.image_url" v-bind:alt="plant.name">
-                    <b>{{plant.name}}</b>
+                    <img v-bind:src="store.plant.image_url" v-bind:alt="store.plant.name">
+                    <b>{{store.plant.name}}</b>
                     <ul>
                         <li>
-                            <a v-on:click.stop :href="'https://www.google.com/search?q=' + encodeURI(plant.common_name)" target="_blank">
-                                {{plant.common_name}}
+                            <a v-on:click.stop :href="'https://www.google.com/search?q=' + encodeURI(store.plant.common_name)" target="_blank">
+                                {{store.plant.common_name}}
                             </a>
                         </li>
-                        <li>Weekly watering: {{plant.water}}</li>
-                        <li>Easy to propagate: {{plant.easy_stekje === 'TRUE' ? '✅': '⛔'}}</li>
-                        <li>Ours for: {{ calculateAge(plant.owned_since) }}</li>
-                        <li>Brought by: {{plant.brought_by}}</li>
+                        <li>Weekly watering: {{store.plant.water}}</li>
+                        <li>Easy to propagate: {{store.plant.easy_stekje === 'TRUE' ? '✅': '⛔'}}</li>
+                        <li>Ours for: {{ calculateAge(store.plant.owned_since) }}</li>
+                        <li>Brought by: {{store.plant.brought_by}}</li>
                     </ul>
                 </div>
             </div>
@@ -25,15 +25,14 @@
                 </svg>
             </button>
         </router-link>
-        <GetPlantButton :plant="plant"/>
+        <GetPlantButton :plant="store.plant"/>
     </div>
 
 </template>
 
-<script>
+<script lang="js" setup>
     import GetPlantButton from './GetPlantButton.vue'
     import { usePlantsStore } from '../stores/plants'
-    import {useRoute} from "vue-router";
 
     export default {
         name: 'PlantDetail',
@@ -42,13 +41,17 @@
         },
         data: () => {
             return {
-                store: usePlantsStore(),
-                plant: null
+                store: usePlantsStore()
             }
         },
-        mounted() {
-            const route = useRoute();
-            this.plant = this.store.getPlantById(route.params.id);
+        created() {
+            this.$watch(
+                () => this.$route.params,
+                () => {
+                    this.plant = usePlantsStore().fetchPlantById(this.$route.params.id);
+                },
+                { immediate: true }
+            )
         },
         methods: {
             calculateAge(date) {
