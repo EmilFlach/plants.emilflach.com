@@ -1,18 +1,17 @@
 <template>
     <h1>{{pageTitle}} {{store.plants != null ? store.plants.length : ''}} plants 🌱</h1>
-    <Loader v-if="store.plants == null" />
+    <Plants></Plants>
     <router-view></router-view>
-
 </template>
 
 <script>
     import { usePlantsStore } from './stores/plants'
-    import Loader from './components/Loader.vue'
+    import Plants from "./components/Plants";
 
     export default {
         name: 'App',
         components: {
-            Loader
+            Plants
         },
         data: () => {
             return {

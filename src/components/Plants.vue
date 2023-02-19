@@ -1,6 +1,7 @@
 <template>
+    <Loader v-if="plants == null" />
     <div class="plants">
-        <router-link v-for="plant in store.plants" v-bind:to="'/plants/' + plant.id" class="plant" :key="plant.name">
+        <router-link v-for="plant in plants" v-bind:to="'/plants/' + plant.id" class="plant" :key="plant.name">
             <div class="plant-container">
                 <img v-bind:src="plant.thumb_url" v-bind:alt="plant.name" onload="this.classList.add('show')">
                 <div class="text">
@@ -13,22 +14,25 @@
 
 <script lang="js" setup>
     import { usePlantsStore } from '../stores/plants'
+    import Loader from "./Loader";
+
     export default {
         name: 'Plants',
-        data: () => {
-            return {
-                store: usePlantsStore()
+        components: {
+            Loader
+        },
+        computed: {
+            pageTitle() {
+                return window.pageTitle;
+            },
+            plants() {
+                return usePlantsStore().plants;
             }
         },
         created() {
-            // watch the params of the route to fetch the data again
             this.$watch(
                 () => this.$route.params,
-                () => {
-                    usePlantsStore().fetchPlants()
-                },
-                // fetch the data when the view is created and the data is
-                // already being observed
+                () => { usePlantsStore().fetchPlants() },
                 { immediate: true }
             )
         }

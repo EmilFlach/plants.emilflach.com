@@ -1,20 +1,20 @@
 <template>
     <div>
-        <router-link to="/" class="plant-detail" v-bind:class="store.plant ? 'show' : ''">
-            <div v-if="store.plant" id="plant-detail" class="scroll-container">
+        <router-link to="/" class="plant-detail">
+            <div v-if="plant" id="plant-detail" class="scroll-container">
                 <div class="content">
-                    <img v-bind:src="store.plant.image_url" v-bind:alt="store.plant.name">
-                    <b>{{store.plant.name}}</b>
+                    <img v-bind:src="plant.image_url" v-bind:alt="plant.name">
+                    <b>{{plant.name}}</b>
                     <ul>
                         <li>
-                            <a v-on:click.stop :href="'https://www.google.com/search?q=' + encodeURI(store.plant.common_name)" target="_blank">
-                                {{store.plant.common_name}}
+                            <a v-on:click.stop :href="'https://www.google.com/search?q=' + encodeURI(plant.common_name)" target="_blank">
+                                {{plant.common_name}}
                             </a>
                         </li>
-                        <li>Weekly watering: {{store.plant.water}}</li>
-                        <li>Easy to propagate: {{store.plant.easy_stekje === 'TRUE' ? '✅': '⛔'}}</li>
-                        <li>Ours for: {{ calculateAge(store.plant.owned_since) }}</li>
-                        <li>Brought by: {{store.plant.brought_by}}</li>
+                        <li>Weekly watering: {{plant.water}}</li>
+                        <li>Easy to propagate: {{plant.easy_stekje === 'TRUE' ? '✅': '⛔'}}</li>
+                        <li>Ours for: {{ calculateAge(plant.owned_since) }}</li>
+                        <li>Brought by: {{plant.brought_by}}</li>
                     </ul>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 </svg>
             </button>
         </router-link>
-        <GetPlantButton :plant="store.plant"/>
+        <GetPlantButton :plant="plant"/>
     </div>
 
 </template>
@@ -39,17 +39,15 @@
         components: {
           GetPlantButton
         },
-        data: () => {
-            return {
-                store: usePlantsStore()
+        computed: {
+            plant() {
+                return usePlantsStore().plant;
             }
         },
         created() {
             this.$watch(
                 () => this.$route.params,
-                () => {
-                    this.plant = usePlantsStore().fetchPlantById(this.$route.params.id);
-                },
+                () => { usePlantsStore().fetchPlantById(this.$route.params.id) },
                 { immediate: true }
             )
         },
@@ -81,8 +79,6 @@
         padding-bottom: 10rem;
         color: white;
         background: rgba(0,0,0,0.9);
-        transform: translateY(130%);
-        transition: transform 0.3s ease-in-out;
         cursor: zoom-out;
     }
 
@@ -146,9 +142,5 @@
 
     .dismiss:hover svg {
         fill: rgba(255,255,255,0.5);
-    }
-
-    .show {
-        transform: translateY(0);
     }
 </style>
