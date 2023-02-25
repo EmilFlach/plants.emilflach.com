@@ -8,18 +8,11 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@webzlodimir/vue-bottom-sheet": "^1.2.4",
-    "body-scroll-lock": "^4.0.0-beta.0",
     "core-js": "^3.6.5",
-    "mitt": "^3.0.0",
     "papaparse": "^5.3.2",
     "pinia": "^2.0.30",
     "vue": "^3.0.0",
-    "vue-gapi": "^2.0.0",
-    "vue-masonry": "^0.13.0",
-    "vue-papa-parse": "^3.1.0",
-    "vue-router": "4",
-    "vuejs-logger": "^1.5.5"
+    "vue-router": "4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
