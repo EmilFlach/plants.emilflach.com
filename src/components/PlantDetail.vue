@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <router-link to="/" class="plant-detail">
-            <div v-if="plant" id="plant-detail" class="scroll-container">
-                <div class="content">
+    <div class="plant-detail">
+        <router-link to="/">
+            <div id="plant-detail" class="scroll-container">
+                <div v-if="plant" class="content">
                     <img v-bind:src="plant.image_url" v-bind:alt="plant.name">
                     <b>{{plant.name}}</b>
                     <ul>
@@ -64,7 +64,7 @@
                 } else {
                     return months + " month"  + (months > 1 ? 's' : '');
                 }
-            },
+            }
         }
     }
 </script>
@@ -78,7 +78,7 @@
         bottom: -10rem;
         padding-bottom: 10rem;
         color: white;
-        background: rgba(0,0,0,0.9);
+        background: black;
         cursor: zoom-out;
     }
 

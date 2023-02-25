@@ -19,7 +19,7 @@ export const usePlantsStore = defineStore('plants', {
         },
         async parsePlants() {
             return new Promise((resolve, reject) => {
-                Papa.parse('/debug-plants.csv', {
+                Papa.parse(window.googleSheetURL, {
                     header: true,
                     download: true,
                     complete: function(results) {

@@ -1,14 +1,17 @@
 <template>
-    <Loader v-if="plants == null" />
-    <div class="plants">
-        <router-link v-for="plant in plants" v-bind:to="'/plants/' + plant.id" class="plant" :key="plant.name">
-            <div class="plant-container">
-                <img v-bind:src="plant.thumb_url" v-bind:alt="plant.name" onload="this.classList.add('show')">
-                <div class="text">
-                    <b>{{plant.name}}</b>
+    <div class="home">
+        <h1>{{pageTitle}} {{plants != null ? plants.length : ''}} plants 🌱</h1>
+        <Loader v-if="plants == null" />
+        <div class="plants">
+            <router-link v-for="plant in plants" v-bind:to="'/plants/' + plant.id" class="plant" :key="plant.name">
+                <div class="plant-container">
+                    <img v-bind:src="plant.thumb_url" v-bind:alt="plant.name" onload="this.classList.add('show')">
+                    <div class="text">
+                        <b>{{plant.name}}</b>
+                    </div>
                 </div>
-            </div>
-        </router-link>
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -40,6 +43,14 @@
 </script>
 
 <style scoped>
+
+    h1 {
+        text-align: center;
+        Font-Family: 'Merriweather', sans-serif;
+        Font-Size: 48px;
+        margin: 0;
+        padding: 3rem 1rem 2rem;
+    }
 
     .plants {
         padding: 0.5rem;
@@ -87,6 +98,9 @@
     }
 
     @media only screen and (min-width: 40rem) {
+        h1 {
+            padding: 3rem 1rem 1rem;
+        }
         .plants {
             padding: 1rem;
             columns: 8 18rem;

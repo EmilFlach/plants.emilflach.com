@@ -1,30 +1,18 @@
 <template>
-    <h1>{{pageTitle}} {{store.plants != null ? store.plants.length : ''}} plants 🌱</h1>
-    <Plants></Plants>
-    <router-view></router-view>
+    <router-view v-slot="{ Component, route }">
+        <transition :name="route.meta.transition">
+                <keep-alive>
+                    <component :is="Component" :key="route.path"/>
+                </keep-alive>
+        </transition>
+    </router-view>
 </template>
 
 <script>
-    import { usePlantsStore } from './stores/plants'
-    import Plants from "./components/Plants";
-
     export default {
         name: 'App',
-        components: {
-            Plants
-        },
-        data: () => {
-            return {
-                store: usePlantsStore()
-            }
-        },
         created () {
             document.title = window.documentTitle;
-        },
-        computed: {
-            pageTitle() {
-                return window.pageTitle;
-            }
         }
     }
 </script>
@@ -42,22 +30,20 @@
         font-size: 16px;
         margin: 0;
     }
-    
-    .no-scroll {
-        overflow: hidden;
+
+    .slide-right-enter-active,
+    .slide-right-leave-active,
+    .slide-left-leave-active,
+    .slide-left-enter-active {
+        transition: all 0.25s ease;
     }
 
-    h1 {
-        text-align: center;
-        Font-Family: 'Merriweather', sans-serif;
-        Font-Size: 48px;
-        margin: 0;
-        padding: 3rem 1rem 2rem;
+    .slide-left-enter-from, .slide-right-leave-to {
+        transform: translateX(-100%);
     }
 
-    @media only screen and (min-width: 40rem) {
-        h1 {
-            padding: 3rem 1rem 1rem;
-        }
+    .slide-right-enter-from, .slide-left-leave-to {
+        transform: translateX(100%);
     }
+
 </style>
