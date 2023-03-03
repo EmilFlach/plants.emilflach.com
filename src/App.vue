@@ -31,11 +31,15 @@
         margin: 0;
     }
 
+    a {
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+
     .slide-right-enter-active,
     .slide-right-leave-active,
     .slide-left-leave-active,
     .slide-left-enter-active {
-        transition: all 0.25s ease;
+        transition: all 0.35s ease;
     }
 
     .slide-left-enter-from, .slide-right-leave-to {
@@ -44,6 +48,15 @@
 
     .slide-right-enter-from, .slide-left-leave-to {
         transform: translateX(100%);
+    }
+
+    @media only screen and (min-width: 40rem) {
+        .slide-right-enter-active,
+        .slide-right-leave-active,
+        .slide-left-leave-active,
+        .slide-left-enter-active {
+            transition: all 0s ease;
+        }
     }
 
 </style>

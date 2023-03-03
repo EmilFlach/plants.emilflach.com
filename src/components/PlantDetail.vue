@@ -1,29 +1,27 @@
 <template>
     <div class="plant-detail">
-        <router-link to="/">
-            <div id="plant-detail" class="scroll-container">
-                <div v-if="plant" class="content">
-                    <img v-bind:src="plant.image_url" v-bind:alt="plant.name">
-                    <b>{{plant.name}}</b>
-                    <ul>
-                        <li>
-                            <a v-on:click.stop :href="'https://www.google.com/search?q=' + encodeURI(plant.common_name)" target="_blank">
-                                {{plant.common_name}}
-                            </a>
-                        </li>
-                        <li>Weekly watering: {{plant.water}}</li>
-                        <li>Easy to propagate: {{plant.easy_stekje === 'TRUE' ? '✅': '⛔'}}</li>
-                        <li>Ours for: {{ calculateAge(plant.owned_since) }}</li>
-                        <li>Brought by: {{plant.brought_by}}</li>
-                    </ul>
-                </div>
-            </div>
+        <div v-if="plant" class="content">
+            <h1>{{plant.name}}</h1>
+            <div :class="!imageLoaded ? 'show' : ''" class="shimmer"></div>
+            <img v-bind:src="plant.image_url" v-bind:alt="plant.name" :class="imageLoaded ? 'show' : ''" @load="onImgLoad()">
 
-            <button class="dismiss">
-                <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
-                </svg>
-            </button>
+            <ul>
+                <li>
+                    <a v-on:click.stop :href="'https://www.google.com/search?q=' + encodeURI(plant.common_name)" target="_blank">
+                        {{plant.common_name}}
+                    </a>
+                </li>
+                <li>Weekly watering: {{plant.water}}</li>
+                <li>Easy to propagate: {{plant.easy_stekje === 'TRUE' ? '✅': '⛔'}}</li>
+                <li>Ours for: {{ calculateAge(plant.owned_since) }}</li>
+                <li>Brought by: {{plant.brought_by}}</li>
+            </ul>
+        </div>
+
+        <router-link to="/" class="dismiss">
+            <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+            </svg>
         </router-link>
         <GetPlantButton :plant="plant"/>
     </div>
@@ -39,6 +37,11 @@
         components: {
           GetPlantButton
         },
+        data () {
+            return {
+                imageLoaded: false
+            }
+        },
         computed: {
             plant() {
                 return usePlantsStore().plant;
@@ -52,6 +55,9 @@
             )
         },
         methods: {
+            onImgLoad() {
+                this.imageLoaded = true;
+            },
             calculateAge(date) {
                 let now = new Date();
                 let epoch = new Date('1970-01-01T00:00:00-0600');
@@ -78,17 +84,11 @@
         bottom: -10rem;
         padding-bottom: 10rem;
         color: white;
-        background: black;
-        cursor: zoom-out;
-    }
-
-    .scroll-container {
-        position: relative;
-        overflow: auto;
-        height: 100%;
+        background: #04120e;
     }
 
     .content {
+        position: relative;
         max-width: 40rem;
         margin: 0 auto;
         padding: 1rem 1rem 6rem;
@@ -101,6 +101,37 @@
         max-height: 90%;
         max-width: 100%;
         border-radius: 1rem;
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .shimmer {
+        position: absolute;
+        opacity: 0;
+        background: #212121 linear-gradient(to right, #212121 0%, #292929 25%, #292929 60%, #212121 100%) no-repeat;
+        background-size: 40% 100%;
+        width: 100%;
+        height: 50vh;
+        border-radius: 1rem;
+
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-name: shimmer;
+        animation-timing-function: ease-in-out;
+    }
+
+    @keyframes shimmer {
+        0% {
+            background-position: -180% 0;
+        }
+        100% {
+            background-position: 180% 0;
+        }
+    }
+
+    .show {
+        opacity: 1;
     }
 
     b {

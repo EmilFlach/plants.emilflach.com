@@ -1,5 +1,5 @@
 <template>
-    <div class="stekje-container" v-bind:class="plant ? 'show' : ''">
+    <div class="stekje-container">
         <button class="stekje" v-if="plant && plant.easy_stekje === 'TRUE'" v-on:click.stop="getStekje(plant)">Stekje please 🌱</button>
         <button class="stekje" v-if="plant && plant.easy_stekje === 'FALSE'" v-on:click.stop="getPlant(plant)">Get this plant 🌿</button>
     </div>
@@ -31,14 +31,6 @@
         position: fixed;
         width: 100%;
         bottom: 1rem;
-        opacity: 0;
-        transform: scale(0.3);
-        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-    }
-
-    .show {
-        opacity: 1;
-        transform: scale(1);
     }
 
     .stekje {

@@ -89,11 +89,15 @@
         cursor: pointer;
     }
 
-    .plant:hover .plant-container {
+    .plant:active .plant-container, .plant:active:after {
+        transition: 0s;
+    }
+
+    .plant:active .plant-container, .plant:hover .plant-container {
         transform: scale(1.02);
     }
 
-    .plant:hover:after {
+    .plant:hover:after, .plant:active:after {
         opacity: 1;
     }
 
