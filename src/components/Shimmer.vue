@@ -1,10 +1,13 @@
 <template>
-    <div v-if="type !== 'text'" class="shimmer" :class="classes"></div>
+    <div v-if="singleShimmer" class="shimmer" :class="classes"></div>
 
     <div v-if="type === 'text'">
-        <div  v-for="x in 5" :key="x" class="shimmer" :class="classes"></div>
+        <div v-for="x in 5" :key="x" class="shimmer" :class="classes"></div>
     </div>
 
+    <div v-if="type === 'plant-list'" class="shimmer-plants">
+        <div v-for="x in 7" :key="x" class="shimmer" :class="classes"></div>
+    </div>
 </template>
 
 <script>
@@ -12,11 +15,16 @@
         name: 'Shimmer',
         props: ['loaded', 'type'],
         computed: {
+            singleShimmer() {
+                return this.type !== 'text' && this.type !== 'plant-list';
+            },
             classes() {
                 return this.shimmerType + this.show;
             },
             show() {
                 switch (this.type) {
+                    case 'plant-list':
+                        return !this.loaded ? ' show-plant-list' : '';
                     case 'text':
                         return !this.loaded ? ' show-text' : '';
                     default:
@@ -33,6 +41,8 @@
                         return 'shimmer-img';
                     case 'text':
                         return 'shimmer-text';
+                    case 'plant-list':
+                        return 'shimmer-plant-list';
                     default:
                         return 'shimmer-text';
                 }
@@ -52,6 +62,37 @@
         animation-name: shimmer;
         animation-timing-function: ease-in-out;
     }
+
+    .shimmer-plants {
+        padding: 0.5rem;
+        columns: 2 9rem;
+        column-gap: 0.5rem;
+    }
+    .shimmer-plant-list {
+        position: fixed;
+        display: inline-block;
+        vertical-align: top;
+        margin-top: 0.5rem;
+        width: 100%;
+        height: 400px;
+        border-radius: 1rem;
+    }
+
+    @media only screen and (min-width: 40rem) {
+        .shimmer-plants {
+            padding: 1rem;
+            columns: 8 18rem;
+            column-gap: 1rem;
+            max-width: 80rem;
+            margin: 0 auto;
+        }
+
+        .shimmer-plant-list {
+            margin-top: 1rem;
+        }
+    }
+
+
 
     .shimmer-text {
         position: fixed;
@@ -92,6 +133,11 @@
     }
 
     .show-text {
+        opacity: 1;
+        position: relative;
+    }
+
+    .show-plant-list {
         opacity: 1;
         position: relative;
     }

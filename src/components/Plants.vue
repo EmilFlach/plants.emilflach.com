@@ -1,7 +1,7 @@
 <template>
     <div class="home">
-        <h1>{{pageTitle}} {{plants != null ? plants.length : ''}} plants 🌱</h1>
-        <Loader v-if="plants == null" />
+        <h1>{{pageTitle}} {{plants ? plants.length : ''}} plants 🌱</h1>
+        <Loader v-if="!plants" />
         <div class="plants">
             <router-link v-for="plant in plants" v-bind:to="'/plants/' + plant.id" class="plant" :key="plant.name">
                 <div class="plant-container">
@@ -18,11 +18,13 @@
 <script lang="js" setup>
     import { usePlantsStore } from '../stores/plants'
     import Loader from "./Loader";
+    import Shimmer from "./Shimmer";
 
     export default {
         name: 'Plants',
         components: {
-            Loader
+            Loader,
+            Shimmer
         },
         computed: {
             pageTitle() {
