@@ -1,28 +1,22 @@
 <template>
     <div class="plant-detail">
         <div class="fixed-content">
-            <h1 v-if="!plant">
+            <h1>
                 <router-link to="/" class="dismiss">◀</router-link>
-                <div :class="!loaded ? 'show' : ''" class="shimmer shimmer-title"></div>
+                <shimmer :type="'h1'" :loaded="plant"></shimmer>
+                {{plant ? plant.name : ''}}
             </h1>
-            <h1 v-if="plant">
-                <router-link to="/" class="dismiss">◀</router-link>
-                {{plant.name}}
-            </h1>
-            <div :class="!loaded ? 'show' : ''" class="shimmer shimmer-img"></div>
+            <shimmer :type="'img'" :loaded="loaded"></shimmer>
             <img v-if="plant" v-bind:src="plant.image_url" v-bind:alt="plant.name" :class="loaded ? 'show' : ''" @load="onImgLoad()">
         </div>
 
         <div class="scrollable-content">
             <div class="plant-information">
                 <h2>
-                    Plant information
+                    <shimmer :type="'h2'" :loaded="plant"></shimmer>
+                    {{plant ? 'Plant information' : ''}}
                 </h2>
-                <ul v-if="!plant">
-                    <li v-for="x in 10"  :key="x">
-                        <div :class="!loaded ? 'show' : ''" class="shimmer shimmer-information"></div>
-                    </li>
-                </ul>
+                <shimmer :type="'text'" :loaded="plant"></shimmer>
                 <ul v-if="plant">
                     <li>
                         <a v-on:click.stop :href="'https://www.google.com/search?q=' + encodeURI(plant.common_name)" target="_blank">
@@ -45,11 +39,13 @@
 <script lang="js" setup>
     import GetPlantButton from './GetPlantButton.vue'
     import { usePlantsStore } from '../stores/plants'
+    import Shimmer from "./Shimmer";
 
     export default {
         name: 'PlantDetail',
         components: {
-          GetPlantButton
+            GetPlantButton,
+            Shimmer
         },
         data () {
             return {
@@ -64,7 +60,11 @@
         created() {
             this.$watch(
                 () => this.$route.params,
-                () => { usePlantsStore().fetchPlantById(this.$route.params.id) },
+                () => {
+                    this.loaded = false;
+                    usePlantsStore().fetchPlantById(this.$route.params.id);
+
+                },
                 { immediate: true }
             )
         },
@@ -117,7 +117,7 @@
     .scrollable-content {
         position: relative;
         margin: 85vh auto 0;
-        background-color: #05322d;
+        background-color: #122b27;
         border-top-left-radius: 1rem;
         border-top-right-radius: 1rem;
     }
@@ -149,45 +149,12 @@
         transition: opacity 0.2s ease-in-out;
     }
 
-    .shimmer {
-        position: fixed;
-        background: #05322d linear-gradient(to right, #05322d 0%, #053c37 25%, #053c37 60%, #05322d 100%) no-repeat;
-        background-size: 40% 100%;
-        border-radius: 1rem;
-        opacity: 0;
-
-        animation-duration: 1s;
-        animation-fill-mode: forwards;
-        animation-iteration-count: infinite;
-        animation-name: shimmer;
-        animation-timing-function: ease-in-out;
+    h1 {
+        height: 3rem;
     }
 
-    .shimmer-information {
-        display: inline-block;
-        height: 1rem;
-        width: 10rem;
-    }
-
-    .shimmer-img {
-        height: 50vh;
-        width: 100%;
-    }
-
-    .shimmer-title {
-        display: inline-block;
-        height: 2rem;
-        width: 50%;
-        margin-top: 0.6rem;
-    }
-
-    @keyframes shimmer {
-        0% {
-            background-position: -180% 0;
-        }
-        100% {
-            background-position: 180% 0;
-        }
+    h2 {
+        height: 2.2rem;
     }
 
     .show {
@@ -211,7 +178,7 @@
     .dismiss {
         font-size: 1.5rem;
         padding-right: 0.5rem;
-        vertical-align: 10%;
+        vertical-align: 9%;
         text-decoration: none;
     }
 
@@ -233,7 +200,7 @@
         .scrollable-content {
             width: 20rem;
             position: relative;
-            margin: 5.5rem 1rem;
+            margin: 5.6rem 1rem;
             height: fit-content;
             border-radius: 1rem;
         }
