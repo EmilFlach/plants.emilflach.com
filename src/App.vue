@@ -2,7 +2,7 @@
     <router-view v-slot="{ Component, route }">
         <transition :name="route.meta.transition">
                 <keep-alive>
-                    <component :is="Component" :key="route.path"/>
+                    <component :is="Component"/>
                 </keep-alive>
         </transition>
     </router-view>
@@ -25,7 +25,8 @@
     }
 
     body {
-        background: rgba(47,110,0,0.13);
+        /*background: rgba(47,110,0,0.13);*/
+        background: #05201b;
         font-family: 'Poppins', sans-serif;
         font-size: 16px;
         margin: 0;

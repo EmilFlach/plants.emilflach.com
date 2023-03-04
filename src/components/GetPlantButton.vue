@@ -1,8 +1,6 @@
 <template>
-    <div class="stekje-container">
-        <button class="stekje" v-if="plant && plant.easy_stekje === 'TRUE'" v-on:click.stop="getStekje(plant)">Stekje please 🌱</button>
-        <button class="stekje" v-if="plant && plant.easy_stekje === 'FALSE'" v-on:click.stop="getPlant(plant)">Get this plant 🌿</button>
-    </div>
+    <button class="stekje" v-if="plant && plant.easy_stekje === 'TRUE'" v-on:click.stop="getStekje(plant)">Stekje please 🌱</button>
+    <button class="stekje" v-if="plant && plant.easy_stekje === 'FALSE'" v-on:click.stop="getPlant(plant)">Get this plant 🌿</button>
 </template>
 
 <script>
@@ -27,17 +25,11 @@
 </script>
 
 <style scoped>
-    .stekje-container {
-        position: fixed;
-        width: 100%;
-        bottom: 1rem;
-    }
-
     .stekje {
+        margin-top: 2rem;
         display: block;
-        width: calc(100% - 2rem);
-        max-width: 30rem;
-        margin: 0 auto;
+        width: 100%;
+        max-width: 25rem;
         padding: 1rem;
 
         color: white;

@@ -48,6 +48,7 @@
         text-align: center;
         Font-Family: 'Merriweather', sans-serif;
         Font-Size: 48px;
+        color: white;
         margin: 0;
         padding: 3rem 1rem 2rem;
     }

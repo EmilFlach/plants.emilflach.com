@@ -1,29 +1,43 @@
 <template>
     <div class="plant-detail">
-        <div v-if="plant" class="content">
-            <h1>{{plant.name}}</h1>
-            <div :class="!imageLoaded ? 'show' : ''" class="shimmer"></div>
-            <img v-bind:src="plant.image_url" v-bind:alt="plant.name" :class="imageLoaded ? 'show' : ''" @load="onImgLoad()">
-
-            <ul>
-                <li>
-                    <a v-on:click.stop :href="'https://www.google.com/search?q=' + encodeURI(plant.common_name)" target="_blank">
-                        {{plant.common_name}}
-                    </a>
-                </li>
-                <li>Weekly watering: {{plant.water}}</li>
-                <li>Easy to propagate: {{plant.easy_stekje === 'TRUE' ? '✅': '⛔'}}</li>
-                <li>Ours for: {{ calculateAge(plant.owned_since) }}</li>
-                <li>Brought by: {{plant.brought_by}}</li>
-            </ul>
+        <div class="fixed-content">
+            <h1 v-if="!plant">
+                <router-link to="/" class="dismiss">◀</router-link>
+                <div :class="!loaded ? 'show' : ''" class="shimmer shimmer-title"></div>
+            </h1>
+            <h1 v-if="plant">
+                <router-link to="/" class="dismiss">◀</router-link>
+                {{plant.name}}
+            </h1>
+            <div :class="!loaded ? 'show' : ''" class="shimmer shimmer-img"></div>
+            <img v-if="plant" v-bind:src="plant.image_url" v-bind:alt="plant.name" :class="loaded ? 'show' : ''" @load="onImgLoad()">
         </div>
 
-        <router-link to="/" class="dismiss">
-            <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
-            </svg>
-        </router-link>
-        <GetPlantButton :plant="plant"/>
+        <div class="scrollable-content">
+            <div class="plant-information">
+                <h2>
+                    Plant information
+                </h2>
+                <ul v-if="!plant">
+                    <li v-for="x in 10"  :key="x">
+                        <div :class="!loaded ? 'show' : ''" class="shimmer shimmer-information"></div>
+                    </li>
+                </ul>
+                <ul v-if="plant">
+                    <li>
+                        <a v-on:click.stop :href="'https://www.google.com/search?q=' + encodeURI(plant.common_name)" target="_blank">
+                            {{plant.common_name}}
+                        </a>
+                    </li>
+                    <li>Weekly watering: {{plant.water}}</li>
+                    <li>Easy to propagate: {{plant.easy_stekje === 'TRUE' ? '✅': '⛔'}}</li>
+                    <li>Ours for: {{ calculateAge(plant.owned_since) }}</li>
+                    <li>Brought by: {{plant.brought_by}}</li>
+                </ul>
+                <GetPlantButton :plant="plant"/>
+            </div>
+        </div>
+
     </div>
 
 </template>
@@ -39,7 +53,7 @@
         },
         data () {
             return {
-                imageLoaded: false
+                loaded: false
             }
         },
         computed: {
@@ -56,7 +70,7 @@
         },
         methods: {
             onImgLoad() {
-                this.imageLoaded = true;
+                this.loaded = true;
             },
             calculateAge(date) {
                 let now = new Date();
@@ -84,41 +98,87 @@
         bottom: -10rem;
         padding-bottom: 10rem;
         color: white;
-        background: #04120e;
+        background: #05201b;
+        overflow: auto;
+        overflow-y: overlay;
     }
 
-    .content {
+    .fixed-content, .scrollable-content {
+        width: 45rem;
+        max-width: 90%;
+    }
+
+    .fixed-content {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .scrollable-content {
         position: relative;
-        max-width: 40rem;
-        margin: 0 auto;
-        padding: 1rem 1rem 6rem;
+        margin: 85vh auto 0;
+        background-color: #05322d;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+    }
+
+    .scrollable-content:after {
+        content: '';
+        position: absolute;
+        top: 0.75rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: block;
+        background-color: rgba(255,255,255,0.8);
+        border-radius: 2px;
+        height: 4px;
+        width: 3rem;
+    }
+
+    .plant-information {
+        padding: 1rem 2rem;
     }
 
     img {
-        position: relative;
-        display: inline-block;
+        display: block;
         vertical-align: top;
         max-height: 90%;
-        max-width: 100%;
+        width: 100%;
         border-radius: 1rem;
         opacity: 0;
         transition: opacity 0.2s ease-in-out;
     }
 
     .shimmer {
-        position: absolute;
-        opacity: 0;
-        background: #212121 linear-gradient(to right, #212121 0%, #292929 25%, #292929 60%, #212121 100%) no-repeat;
+        position: fixed;
+        background: #05322d linear-gradient(to right, #05322d 0%, #053c37 25%, #053c37 60%, #05322d 100%) no-repeat;
         background-size: 40% 100%;
-        width: 100%;
-        height: 50vh;
         border-radius: 1rem;
+        opacity: 0;
 
         animation-duration: 1s;
         animation-fill-mode: forwards;
         animation-iteration-count: infinite;
         animation-name: shimmer;
         animation-timing-function: ease-in-out;
+    }
+
+    .shimmer-information {
+        display: inline-block;
+        height: 1rem;
+        width: 10rem;
+    }
+
+    .shimmer-img {
+        height: 50vh;
+        width: 100%;
+    }
+
+    .shimmer-title {
+        display: inline-block;
+        height: 2rem;
+        width: 50%;
+        margin-top: 0.6rem;
     }
 
     @keyframes shimmer {
@@ -134,20 +194,14 @@
         opacity: 1;
     }
 
-    b {
-        display: inline-block;
-        vertical-align: top;
-        padding: 1.5rem 0 1rem;
-        font-size: 1.75rem;
-    }
-
     ul {
+        padding: 0;
         margin: 0;
-        padding-left: 1rem;
     }
 
     li {
-        padding-bottom: 0.25rem;
+        padding-bottom: 0.5rem;
+        list-style: none;
     }
 
     a {
@@ -155,23 +209,43 @@
     }
 
     .dismiss {
-        width: 4rem;
-        height: 4rem;
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        border: none;
-        border-radius: 50%;
-        background-color: rgba(255,255,255,0);
-        cursor: pointer;
+        font-size: 1.5rem;
+        padding-right: 0.5rem;
+        vertical-align: 10%;
+        text-decoration: none;
     }
 
-    .dismiss svg {
-        fill: white;
-        filter: drop-shadow( 1px 1px 2px rgba(0, 0, 0, .3));
+    .dismiss:hover, .dismiss:active {
+        text-decoration: underline;
     }
 
-    .dismiss:hover svg {
-        fill: rgba(255,255,255,0.5);
+    @media only screen and (min-width: 60rem) {
+        .plant-detail {
+            display: flex;
+            justify-content: center;
+        }
+        .fixed-content {
+            width: 40rem;
+            position: relative;
+            left: 0;
+            transform: translateX(0);
+        }
+        .scrollable-content {
+            width: 20rem;
+            position: relative;
+            margin: 5.5rem 1rem;
+            height: fit-content;
+            border-radius: 1rem;
+        }
+        .scrollable-content:after {
+            display: none;
+        }
+    }
+
+    @media only screen and (min-width: 70rem) {
+        .fixed-content {
+            width: 50rem;
+        }
+
     }
 </style>
