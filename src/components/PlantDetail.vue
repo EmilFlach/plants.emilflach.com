@@ -30,8 +30,9 @@
                     <li>Easy to propagate: {{plant.easy_stekje === 'TRUE' ? '✅': '⛔'}}</li>
 
 
-                    <li>Weekly watering: {{plant.water}}</li>
-                    <li>Brought by: {{plant.brought_by}}</li>
+                    <li v-for="[key, value] in plantDetailFields" :key="key">
+                        {{key}}: {{value}}
+                    </li>
                 </ul>
                 <GetPlantButton :plant="plant"/>
             </div>
@@ -60,6 +61,9 @@
         computed: {
             plant() {
                 return usePlantsStore().plant;
+            },
+            plantDetailFields() {
+                return usePlantsStore().plantDetailFields;
             }
         },
         created() {
@@ -83,7 +87,6 @@
                 } else {
                     deathday = new Date(deathday);
                 }
-                window.console.log(deathday);
                 let epoch = new Date('1970-01-01T00:00:00-0600');
                 let plantDate = new Date(birthday);
                 let difference = new Date(deathday - plantDate);
