@@ -1,11 +1,23 @@
 <template>
     <div class="home">
         <h1>{{pageTitle}} {{plants ? plants.length : ''}} plants 🌱</h1>
-        <Loader v-if="!plants" />
-        <div class="plants">
+
+        <div v-if="!loaded" class="plants show">
+            <div v-for="plant in 20" class="plant" :key="plant">
+                <div class="plant-container">
+                    <shimmer :type="'list-img'" :loaded="loaded"></shimmer>
+                </div>
+            </div>
+        </div>
+
+        <div class="plants" v-bind:class="loaded ? 'show' : ''">
             <router-link v-for="plant in plants" v-bind:to="'/plants/' + plant.id" class="plant" :key="plant.name">
                 <div class="plant-container">
-                    <img v-bind:src="plant.thumb_url" v-bind:alt="plant.name" onload="this.classList.add('show')">
+                    <img
+                        v-bind:src="plant.thumb_url"
+                        v-bind:alt="plant.name"
+                        @load="this.imageLoaded(plant)"
+                    >
                     <div class="text">
                         <b>{{plant.name}}</b>
                     </div>
@@ -26,6 +38,12 @@
             Loader,
             Shimmer
         },
+        data () {
+            return {
+                imagesLoaded: 0,
+                loaded: false
+            }
+        },
         computed: {
             pageTitle() {
                 return window.pageTitle;
@@ -40,6 +58,14 @@
                 () => { usePlantsStore().fetchPlants() },
                 { immediate: true }
             )
+        },
+        methods: {
+            imageLoaded() {
+                this.imagesLoaded++;
+                if (this.imagesLoaded === this.plants.length) {
+                    this.loaded = true;
+                }
+            }
         }
     }
 </script>
@@ -56,9 +82,11 @@
     }
 
     .plants {
+        opacity: 0;
         padding: 0.5rem;
         columns: 2 9rem;
         column-gap: 0.5rem;
+        transition: opacity 0.25s ease-in-out;
     }
 
     .plant {
@@ -138,8 +166,6 @@
         display: block;
         width: 100%;
         border-radius: 1rem;
-        opacity: 0;
-        transition: opacity 0.25s ease-in-out;
     }
 
     .show {

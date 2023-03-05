@@ -14,7 +14,6 @@
     .loader-container{
         width: 100%;
         text-align: center;
-
     }
     .loader {
         display: inline-block;
@@ -28,8 +27,8 @@
         height: 64px;
         margin: 8px;
         border-radius: 50%;
-        border: 6px solid black;
-        border-color: black transparent black transparent;
+        border: 6px solid rgba(255,255,255,0.2);
+        border-color: rgba(255,255,255,0.2) transparent rgba(255,255,255,0.2) transparent;
         animation: loader 1.2s linear infinite;
     }
     @keyframes loader {
