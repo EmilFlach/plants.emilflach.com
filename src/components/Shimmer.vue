@@ -19,6 +19,8 @@
             },
             show() {
                 switch (this.type) {
+                    case 'img':
+                        return !this.loaded ? ' show-relative' : '';
                     case 'list-img':
                         return !this.loaded ? ' show-relative' : '';
                     case 'text':
@@ -68,14 +70,6 @@
         border-radius: 0.5rem;
     }
 
-    .shimmer-img {
-        position: fixed;
-        height: 50vh;
-        width: 100%;
-        border-radius: 1rem;
-        transition: opacity 0.2s ease-in-out;
-    }
-
     .shimmer-list-img {
         position: fixed;
         display: block;
@@ -101,6 +95,33 @@
         margin-top: 0.5rem;
         border-radius: 1rem;
     }
+
+    .shimmer-img {
+        position: fixed;
+        height: 50vh;
+        width: 100%;
+        border-radius: 1rem;
+    }
+
+    @media only screen and (min-width: 40rem) {
+        .shimmer-img {
+            width: 20rem;
+        }
+    }
+
+    @media only screen and (min-width: 60rem) {
+        .shimmer-img {
+            width: 40rem;
+        }
+    }
+
+    @media only screen and (min-width: 70rem) {
+        .shimmer-img {
+            width: 50rem;
+        }
+    }
+
+
 
     .show {
         opacity: 1;

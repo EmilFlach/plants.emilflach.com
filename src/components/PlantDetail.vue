@@ -1,7 +1,7 @@
 <template>
     <div class="plant-detail">
         <div class="fixed-content">
-            <h1>
+            <h1 :class="!plant ? 'h1-loading' : ''">
                 <router-link to="/" class="dismiss">◀</router-link>
                 <shimmer :type="'h1'" :loaded="plant"></shimmer>
                 {{plant ? plant.name : ''}}
@@ -12,7 +12,7 @@
 
         <div class="scrollable-content">
             <div class="plant-information">
-                <h2>
+                <h2 :class="!plant ? 'h2-loading' : ''">
                     <shimmer :type="'h2'" :loaded="plant"></shimmer>
                     {{plant ? 'Plant information' : ''}}
                 </h2>
@@ -141,19 +141,18 @@
 
     img {
         display: block;
-        vertical-align: top;
-        max-height: 90%;
         width: 100%;
+        max-height: 90%;
         border-radius: 1rem;
         opacity: 0;
-        transition: opacity 0.2s ease-in-out;
+        transition: opacity 0.25s ease-in-out;
     }
 
-    h1 {
+    .h1-loading {
         height: 3rem;
     }
 
-    h2 {
+    .h2-loading {
         height: 2.2rem;
     }
 
@@ -186,14 +185,18 @@
         text-decoration: underline;
     }
 
-    @media only screen and (min-width: 60rem) {
+    @media only screen and (min-width: 40rem) {
         .plant-detail {
             display: flex;
             justify-content: center;
+            overflow: hidden;
         }
         .fixed-content {
-            width: 40rem;
             position: relative;
+            width: auto;
+            max-width: 40rem;
+            padding-bottom: 7rem;
+            padding-left: 1rem;
             left: 0;
             transform: translateX(0);
         }
@@ -207,11 +210,16 @@
         .scrollable-content:after {
             display: none;
         }
+        img {
+            width: auto;
+            max-height: 100%;
+            max-width: 100%;
+        }
     }
 
     @media only screen and (min-width: 70rem) {
         .fixed-content {
-            width: 50rem;
+            max-width: 50rem;
         }
 
     }
