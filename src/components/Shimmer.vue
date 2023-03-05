@@ -102,6 +102,7 @@
         height: 50vh;
         width: 100%;
         border-radius: 1rem;
+        transition: opacity 0.1s ease-in-out;
     }
 
     @media only screen and (min-width: 40rem) {

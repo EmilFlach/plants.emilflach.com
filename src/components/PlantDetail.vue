@@ -14,21 +14,16 @@
             <div class="plant-information">
                 <h2 :class="!plant ? 'h2-loading' : ''">
                     <shimmer :type="'h2'" :loaded="plant"></shimmer>
-                    {{plant ? 'Plant information' : ''}}
+                    <a v-if="plant" :href="'https://www.google.com/search?q=' + encodeURI(plant.common_name)" target="_blank">
+                        {{plant.common_name}}
+                    </a>
                 </h2>
                 <shimmer :type="'text'" :loaded="plant"></shimmer>
                 <ul v-if="plant">
-                    <li>
-                        <a :href="'https://www.google.com/search?q=' + encodeURI(plant.common_name)" target="_blank">
-                            {{plant.common_name}}
-                        </a>
-                    </li>
                     <li v-if="!plant.dead_since">Ours for: {{ calculateAge(plant.owned_since) }}</li>
-
                     <li v-if="plant.dead_since">Lived for: {{ calculateAge(plant.owned_since, plant.dead_since) }}</li>
                     <li v-if="plant.dead_since">Died on: {{ plant.dead_since }}</li>
                     <li>Easy to propagate: {{plant.easy_stekje === 'TRUE' ? '✅': '⛔'}}</li>
-
 
                     <li v-for="[key, value] in plantDetailFields" :key="key">
                         {{key}}: {{value}}
@@ -72,7 +67,6 @@
                 () => {
                     this.loaded = false;
                     usePlantsStore().fetchPlantById(this.$route.params.id);
-
                 },
                 { immediate: true }
             )
@@ -80,6 +74,10 @@
         methods: {
             onImgLoad() {
                 this.loaded = true;
+                // let scrollContainer = document.querySelector('.scrollable-content');
+                // setTimeout(function () {
+                //     scrollContainer.scrollIntoView({behavior: "smooth"});
+                // } , 300);
             },
             calculateAge(birthday, deathday = null) {
                 if(deathday === null) {
@@ -108,8 +106,7 @@
         top: 0;
         left: 0;
         right: 0;
-        bottom: -10rem;
-        padding-bottom: 10rem;
+        bottom: 0;
         color: white;
         background: #05201b;
         overflow: auto;
