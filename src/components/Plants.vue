@@ -24,6 +24,22 @@
                 </div>
             </router-link>
         </div>
+
+        <h2>Graveyard of {{deadPlants ? deadPlants.length : ''}} plants 💀</h2>
+        <div class="plants" v-bind:class="loaded ? 'show' : ''">
+            <router-link v-for="plant in deadPlants" v-bind:to="'/plants/' + plant.id" class="plant" :key="plant.name">
+                <div class="plant-container">
+                    <img
+                            v-bind:src="plant.thumb_url"
+                            v-bind:alt="plant.name"
+                            @load="this.imageLoaded(plant)"
+                    >
+                    <div class="text">
+                        <b>{{plant.name}}</b>
+                    </div>
+                </div>
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -50,6 +66,9 @@
             },
             plants() {
                 return usePlantsStore().plants;
+            },
+            deadPlants() {
+                return usePlantsStore().deadPlants;
             }
         },
         created() {
@@ -72,13 +91,17 @@
 
 <style scoped>
 
-    h1 {
+    h1, h2 {
         text-align: center;
         Font-Family: 'Merriweather', sans-serif;
         Font-Size: 48px;
         color: white;
         margin: 0;
         padding: 3rem 1rem 2rem;
+    }
+
+    h2 {
+        Font-Size: 38px;
     }
 
     .plants {

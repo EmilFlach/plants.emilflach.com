@@ -19,13 +19,18 @@
                 <shimmer :type="'text'" :loaded="plant"></shimmer>
                 <ul v-if="plant">
                     <li>
-                        <a v-on:click.stop :href="'https://www.google.com/search?q=' + encodeURI(plant.common_name)" target="_blank">
+                        <a :href="'https://www.google.com/search?q=' + encodeURI(plant.common_name)" target="_blank">
                             {{plant.common_name}}
                         </a>
                     </li>
-                    <li>Weekly watering: {{plant.water}}</li>
+                    <li v-if="!plant.dead_since">Ours for: {{ calculateAge(plant.owned_since) }}</li>
+
+                    <li v-if="plant.dead_since">Lived for: {{ calculateAge(plant.owned_since, plant.dead_since) }}</li>
+                    <li v-if="plant.dead_since">Died on: {{ plant.dead_since }}</li>
                     <li>Easy to propagate: {{plant.easy_stekje === 'TRUE' ? '✅': '⛔'}}</li>
-                    <li>Ours for: {{ calculateAge(plant.owned_since) }}</li>
+
+
+                    <li>Weekly watering: {{plant.water}}</li>
                     <li>Brought by: {{plant.brought_by}}</li>
                 </ul>
                 <GetPlantButton :plant="plant"/>
@@ -72,11 +77,16 @@
             onImgLoad() {
                 this.loaded = true;
             },
-            calculateAge(date) {
-                let now = new Date();
+            calculateAge(birthday, deathday = null) {
+                if(deathday === null) {
+                    deathday = new Date();
+                } else {
+                    deathday = new Date(deathday);
+                }
+                window.console.log(deathday);
                 let epoch = new Date('1970-01-01T00:00:00-0600');
-                let plantDate = new Date(date);
-                let difference = new Date(now - plantDate);
+                let plantDate = new Date(birthday);
+                let difference = new Date(deathday - plantDate);
                 let years = difference.getYear() - epoch.getYear();
                 let months = difference.getMonth() - epoch.getMonth();
                 if (years > 0) {
@@ -115,6 +125,7 @@
     }
 
     .scrollable-content {
+        z-index: 1;
         position: relative;
         margin: 85vh auto 0;
         background-color: #122b27;

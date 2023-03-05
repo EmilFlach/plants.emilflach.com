@@ -53,6 +53,7 @@
         background: rgba(255,255,255,0.05) linear-gradient(to right, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0.15) 35%, rgba(255,255,255,0.1) 60%, rgba(255,255,255,0.01) 100%) no-repeat;
         background-size: 40% 100%;
         opacity: 0;
+        z-index: -1;
 
         animation-duration: 1s;
         animation-fill-mode: forwards;
