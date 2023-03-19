@@ -36,7 +36,7 @@ export const usePlantsStore = defineStore('plants', {
         },
         async parsePlants() {
             return new Promise((resolve, reject) => {
-                Papa.parse(window.googleSheetURL, {
+                Papa.parse(window.plantsSheet, {
                     header: true,
                     download: true,
                     complete: function(results) {

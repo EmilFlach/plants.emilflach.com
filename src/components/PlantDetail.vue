@@ -40,6 +40,7 @@
 <script lang="js" setup>
     import GetPlantButton from './GetPlantButton.vue'
     import { usePlantsStore } from '../stores/plants'
+    import {usePlantsHistoryStore} from "../stores/plantsHistory";
     import Shimmer from "./Shimmer";
 
     export default {
@@ -59,7 +60,10 @@
             },
             plantDetailFields() {
                 return usePlantsStore().plantDetailFields;
-            }
+            },
+            history() {
+                return usePlantsHistoryStore().history;
+            },
         },
         created() {
             this.$watch(
@@ -67,6 +71,7 @@
                 () => {
                     this.loaded = false;
                     usePlantsStore().fetchPlantById(this.$route.params.id);
+                    usePlantsHistoryStore().fetchPlantHistoryById(this.$route.params.id);
                 },
                 { immediate: true }
             )
